@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chesper the Doodle | chesperdoodle.com</title>
+<meta name="description" content="Meet Chesper — a fluffy Goldendoodle who loves tug-of-war, park adventures, and being the world's goodest boy.">
+<meta property="og:title" content="Chesper the Doodle">
+<meta property="og:description" content="Goldendoodle extraordinaire, tug-of-war champion & professional tail wagger.">
+<meta property="og:image" content="images/hero.jpg">
+<meta property="og:url" content="https://chesperdoodle.com">
+<link rel="canonical" href="https://chesperdoodle.com">
+<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --peach: #FFB088;
+    --pink: #FF8FAB;
+    --lavender: #C3A6FF;
+    --mint: #8EEDC7;
+    --cream: #FFF8F0;
+    --warm-brown: #6B4226;
+    --soft-gold: #FFD66B;
+    --sky: #B8DEFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--cream);
+    color: var(--warm-brown);
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='28' font-size='28'>🐾</text></svg>") 4 4, auto;
+  }
+
+  /* Floating paw prints */
+  .paw-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .paw-bg span {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.08;
+    animation: floatPaw 15s linear infinite;
+  }
+  @keyframes floatPaw {
+    0% { transform: translateY(110vh) rotate(0deg); }
+    100% { transform: translateY(-10vh) rotate(360deg); }
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(16px);
+    background: rgba(255,248,240,0.7);
+    border-bottom: 2px solid rgba(255,143,171,0.15);
+  }
+  nav .logo {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--peach), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  nav .nav-links a {
+    color: var(--warm-brown);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    position: relative;
+  }
+  nav .nav-links a:hover { color: var(--pink); }
+  nav .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--pink);
+    transition: width 0.3s;
+    border-radius: 1px;
+  }
+  nav .nav-links a:hover::after { width: 100%; }
+  .ig-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .ig-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(221,42,123,0.3);
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--pink);
+    color: white;
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+  }
+
+  .dog-avatar {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    margin: 1.5rem auto;
+    box-shadow: 0 10px 40px rgba(255,143,171,0.3);
+    animation: bounceIn 0.8s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, wiggle 3s ease-in-out infinite 1.5s;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+    border: 5px solid white;
+  }
+  .dog-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .dog-avatar::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 60%);
+    animation: shimmer 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.1;
+    animation: bounceIn 0.8s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+  }
+  .hero h1 .highlight {
+    background: linear-gradient(135deg, var(--peach), var(--pink), var(--lavender));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.3rem;
+    color: var(--warm-brown);
+    opacity: 0;
+    margin-top: 1rem;
+    animation: bounceIn 0.8s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .birthday-banner {
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, var(--soft-gold), #FFE8A0);
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(255,214,107,0.3);
+    animation: bounceIn 0.8s 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+  }
+
+  .scroll-down {
+    margin-top: 2rem;
+    opacity: 0;
+    animation: bounceIn 0.8s 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .scroll-down span {
+    display: block;
+    font-size: 2rem;
+    animation: bouncePaw 1.5s ease-in-out infinite;
+  }
+
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3) translateY(40px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+  }
+  @keyframes shimmer {
+    0%, 100% { transform: translate(-20%, -20%); }
+    50% { transform: translate(20%, 20%); }
+  }
+  @keyframes bouncePaw {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+
+  /* Ticker */
+  .ticker-wrap {
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--peach), var(--pink));
+    padding: 0.8rem 0;
+    position: relative;
+    z-index: 1;
+  }
+  .ticker {
+    display: flex;
+    white-space: nowrap;
+    animation: tickerScroll 20s linear infinite;
+    gap: 3rem;
+  }
+  .ticker span {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.1rem;
+    color: white;
+  }
+  @keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .wave-divider { position: relative; z-index: 1; }
+  .wave-divider svg { display: block; width: 100%; }
+
+  /* Sections */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  .section-title::after {
+    content: '🦴';
+    display: block;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    animation: wiggle 2s ease-in-out infinite;
+  }
+
+  /* Stat cards */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(107,66,38,0.06);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: fadeUp 0.6s ease forwards;
+    opacity: 0;
+  }
+  .stat-card:nth-child(1) { animation-delay: 0.1s; }
+  .stat-card:nth-child(2) { animation-delay: 0.2s; }
+  .stat-card:nth-child(3) { animation-delay: 0.3s; }
+  .stat-card:nth-child(4) { animation-delay: 0.4s; }
+  .stat-card:hover { transform: translateY(-8px) rotate(2deg); }
+  .stat-card .emoji { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+  .stat-card .label {
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--pink);
+    margin-bottom: 0.3rem;
+  }
+  .stat-card .value {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.4rem;
+  }
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Favorites */
+  .favorites {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  .fav-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(107,66,38,0.06);
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .fav-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .fav-card:nth-child(1)::before { background: var(--peach); }
+  .fav-card:nth-child(2)::before { background: var(--mint); }
+  .fav-card:nth-child(3)::before { background: var(--lavender); }
+  .fav-card:hover { transform: scale(1.03); }
+  .fav-card h3 {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .fav-card ul { list-style: none; padding: 0; }
+  .fav-card li { padding: 0.4rem 0; font-size: 1rem; }
+  .fav-card li::before { content: '🐾 '; }
+
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+  .gallery-item {
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+  }
+  .gallery-item:hover {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 12px 30px rgba(107,66,38,0.15);
+    z-index: 2;
+  }
+  .gallery-item img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(107,66,38,0.6) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+  }
+  .gallery-item:hover .overlay { opacity: 1; }
+  .gallery-item .overlay span {
+    color: white;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1rem;
+  }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gallery-item:nth-child(1) img { aspect-ratio: 1; height: 100%; }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    animation: lbIn 0.3s ease;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    font-family: 'Bubblegum Sans', cursive;
+  }
+  @keyframes lbIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Instagram CTA */
+  .ig-cta {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 3rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .ig-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.3rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 20px rgba(221,42,123,0.3);
+  }
+  .ig-cta-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(221,42,123,0.4);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.9rem;
+    color: var(--warm-brown);
+    opacity: 0.6;
+    position: relative;
+    z-index: 1;
+  }
+  footer .big-paw {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+    animation: wiggle 3s ease-in-out infinite;
+  }
+
+  @media (max-width: 600px) {
+    nav .nav-links { display: none; }
+    .gallery { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="paw-bg" id="pawBg"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+  <span class="close-btn">✕</span>
+  <img id="lightboxImg" src="" alt="Chesper">
+</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="logo">🐾 chesperdoodle</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#favorites">Favorites</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+  <a href="https://www.instagram.com/chesper0327/" target="_blank" class="ig-link">📸 Instagram</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <span class="hero-badge">World's Goodest Boy</span>
+  <div class="dog-avatar">
+    <img src="images/hero.jpg" alt="Chesper the Goldendoodle">
+  </div>
+  <h1>Hi, I'm <span class="highlight">Chesper!</span></h1>
+  <p class="hero-sub">Goldendoodle extraordinaire, tug-of-war champion & professional tail wagger 🐾</p>
+  <div class="birthday-banner" id="birthdayBanner">
+    🎂 <span id="birthdayText"></span>
+  </div>
+  <div class="scroll-down"><span>🐾</span></div>
+</section>
+
+<!-- Scrolling ticker -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>🐾 Woof woof!</span><span>🦴 Treat please!</span><span>🎾 Tug time!</span>
+    <span>🌳 Park adventures!</span><span>💛 Goldendoodle life!</span><span>😴 Professional napper</span>
+    <span>🐕 Fluffy & proud</span><span>✨ Living my best life</span>
+    <span>🐾 Woof woof!</span><span>🦴 Treat please!</span><span>🎾 Tug time!</span>
+    <span>🌳 Park adventures!</span><span>💛 Goldendoodle life!</span><span>😴 Professional napper</span>
+    <span>🐕 Fluffy & proud</span><span>✨ Living my best life</span>
+  </div>
+</div>
+
+<!-- Wave divider -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 40C240 80 480 0 720 40C960 80 1200 0 1440 40V100H0Z" fill="white" fill-opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- About -->
+<section class="section" id="about">
+  <h2 class="section-title">All About Me</h2>
+  <div class="stats">
+    <div class="stat-card">
+      <span class="emoji">🎂</span>
+      <div class="label">Birthday</div>
+      <div class="value">March 27, 2022</div>
+    </div>
+    <div class="stat-card">
+      <span class="emoji">🐕</span>
+      <div class="label">Breed</div>
+      <div class="value">Goldendoodle</div>
+    </div>
+    <div class="stat-card">
+      <span class="emoji">💛</span>
+      <div class="label">Personality</div>
+      <div class="value">Playful & loving</div>
+    </div>
+    <div class="stat-card">
+      <span class="emoji">📍</span>
+      <div class="label">Favorite Spot</div>
+      <div class="value">Wherever you are!</div>
+    </div>
+  </div>
+</section>
+
+<!-- Favorites -->
+<section class="section" id="favorites">
+  <h2 class="section-title">My Favorite Things</h2>
+  <div class="favorites">
+    <div class="fav-card">
+      <h3>🎾 Outdoor Adventures</h3>
+      <ul>
+        <li>Epic tug-of-war battles</li>
+        <li>Park zoomies</li>
+        <li>Splashing in puddles</li>
+        <li>Sniffing ALL the things</li>
+      </ul>
+    </div>
+    <div class="fav-card">
+      <h3>🍖 Snack Time</h3>
+      <ul>
+        <li>Peanut butter (obviously)</li>
+        <li>Cheese crumbles</li>
+        <li>Blueberries</li>
+        <li>Whatever you're eating</li>
+      </ul>
+    </div>
+    <div class="fav-card">
+      <h3>💕 Things I Love</h3>
+      <ul>
+        <li>My tug rope (the good one)</li>
+        <li>Post-walk belly rubs</li>
+        <li>Greeting every human ever</li>
+        <li>Being the goodest boy</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="section" id="gallery">
+  <h2 class="section-title">My Cutest Moments</h2>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/walk.jpg" alt="Chesper on a walk" loading="lazy">
+      <div class="overlay"><span>☀️ Walk time!</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/window.jpg" alt="Chesper by the window" loading="lazy">
+      <div class="overlay"><span>😎 Chillin</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/sleepy.jpg" alt="Sleepy Chesper" loading="lazy">
+      <div class="overlay"><span>😴 Sleepy boy</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/store.jpg" alt="Chesper at the pet store" loading="lazy">
+      <div class="overlay"><span>🛒 Shopping!</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/toy.jpg" alt="Chesper with his toy" loading="lazy">
+      <div class="overlay"><span>🧸 My toy!</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/puppy.jpg" alt="Puppy Chesper" loading="lazy">
+      <div class="overlay"><span>🐶 Puppy days</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/nose.jpg" alt="Chesper nose closeup" loading="lazy">
+      <div class="overlay"><span>👃 Boop!</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/cuddles.jpg" alt="Chesper cuddles" loading="lazy">
+      <div class="overlay"><span>🥰 Cuddles</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="images/park.jpg" alt="Chesper at the dog park" loading="lazy">
+      <div class="overlay"><span>🌳 Dog park!</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram CTA -->
+<div class="ig-cta">
+  <p style="font-family:'Bubblegum Sans',cursive;font-size:1.8rem;margin-bottom:1.5rem;">Want more Chesper? 🐶</p>
+  <a href="https://www.instagram.com/chesper0327/" target="_blank" class="ig-cta-btn">📸 Follow @chesper0327</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <span class="big-paw">🐾</span>
+  Made with woofs & wiggles<br>
+  chesperdoodle.com &copy; 2026
+</footer>
+
+<script>
+  // Floating paw prints
+  const pawBg = document.getElementById('pawBg');
+  const paws = ['🐾', '🦴', '❤️', '⭐', '🎾'];
+  for (let i = 0; i < 25; i++) {
+    const span = document.createElement('span');
+    span.textContent = paws[Math.floor(Math.random() * paws.length)];
+    span.style.left = Math.random() * 100 + '%';
+    span.style.animationDelay = Math.random() * 15 + 's';
+    span.style.animationDuration = (12 + Math.random() * 10) + 's';
+    span.style.fontSize = (1 + Math.random() * 2) + 'rem';
+    pawBg.appendChild(span);
+  }
+
+  // Birthday countdown
+  function updateBirthday() {
+    var now = new Date();
+    var thisYearBday = new Date(now.getFullYear(), 2, 27);
+    var nextBday = thisYearBday > now ? thisYearBday : new Date(now.getFullYear() + 1, 2, 27);
+    var diff = Math.ceil((nextBday - now) / (1000 * 60 * 60 * 24));
+    var age = now.getFullYear() - 2022 - (now < thisYearBday ? 1 : 0);
+    var el = document.getElementById('birthdayText');
+    if (diff <= 7 && diff > 0) {
+      el.textContent = '\uD83C\uDF89 My birthday is in ' + diff + ' day' + (diff === 1 ? '' : 's') + '! Turning ' + (age + 1) + '!';
+    } else if (now.getMonth() === 2 && now.getDate() === 27) {
+      el.textContent = '\uD83E\uDD73 TODAY IS MY BIRTHDAY! I\'m ' + age + '! \uD83C\uDF88\uD83C\uDF89';
+    } else {
+      el.textContent = 'I\'m ' + age + ' years old! \uD83C\uDF88 Birthday in ' + diff + ' days';
+    }
+  }
+  updateBirthday();
+
+  // Lightbox
+  function openLightbox(el) {
+    var img = el.querySelector('img');
+    document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+</script>
+</body>
+</html>
