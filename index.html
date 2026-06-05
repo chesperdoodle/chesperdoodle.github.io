@@ -419,6 +419,24 @@
   .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
   .gallery-item:nth-child(1) img { aspect-ratio: 1; height: 100%; }
 
+  /* Friendly placeholder shown until a photo file is added */
+  .gallery-item.placeholder {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--sky), var(--lavender));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+  }
+  .gallery-item.placeholder::before {
+    content: attr(data-emoji);
+    font-size: 3rem;
+    opacity: 0.85;
+    animation: wiggle 3s ease-in-out infinite;
+  }
+  .gallery-item.placeholder:hover { transform: none; box-shadow: none; }
+  .gallery-item.placeholder .overlay { opacity: 1; }
+
   /* Lightbox */
   .lightbox {
     position: fixed;
@@ -522,6 +540,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#favorites">Favorites</a></li>
     <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#mom">Me &amp; Mom</a></li>
   </ul>
   <a href="https://www.instagram.com/chesper0327/" target="_blank" class="ig-link">📸 Instagram</a>
 </nav>
@@ -664,6 +683,72 @@
       <img src="images/happy.jpg" alt="Happy Chesper" loading="lazy">
       <div class="overlay"><span>😄 Happy boy!</span></div>
     </div>
+    <div class="gallery-item" data-emoji="🐾" onclick="openLightbox(this)">
+      <img src="images/paws.jpg" alt="Chesper's paws" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🐾 Toe beans!</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="🐾" onclick="openLightbox(this)">
+      <img src="images/paws2.jpg" alt="Chesper's paw closeup" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🐾 Paw five!</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Me & Mom -->
+<section class="section" id="mom">
+  <h2 class="section-title">Me &amp; Mom</h2>
+  <p style="text-align:center; max-width:600px; margin:-1.5rem auto 2.5rem; font-size:1.05rem; opacity:0.8;">
+    My favorite human and me 💕
+  </p>
+  <div class="gallery">
+    <div class="gallery-item" data-emoji="💕" onclick="openLightbox(this)">
+      <img src="images/mom1.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>💕 Me &amp; Mom</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="🥰" onclick="openLightbox(this)">
+      <img src="images/mom2.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🥰 Best human</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="🤗" onclick="openLightbox(this)">
+      <img src="images/mom3.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🤗 Cuddle time</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="🚶" onclick="openLightbox(this)">
+      <img src="images/mom4.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🚶 Walkies together</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="😴" onclick="openLightbox(this)">
+      <img src="images/mom5.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>😴 Nap buddies</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="🎾" onclick="openLightbox(this)">
+      <img src="images/mom6.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🎾 Playtime</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="🌳" onclick="openLightbox(this)">
+      <img src="images/mom7.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🌳 Park days</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="🐾" onclick="openLightbox(this)">
+      <img src="images/mom8.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🐾 Adventures</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="📸" onclick="openLightbox(this)">
+      <img src="images/mom9.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>📸 Say cheese!</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="❤️" onclick="openLightbox(this)">
+      <img src="images/mom10.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>❤️ Love you Mom</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="✨" onclick="openLightbox(this)">
+      <img src="images/mom11.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>✨ My person</span></div>
+    </div>
+    <div class="gallery-item" data-emoji="🏡" onclick="openLightbox(this)">
+      <img src="images/mom12.jpg" alt="Chesper and mom" loading="lazy" onerror="markPlaceholder(this)">
+      <div class="overlay"><span>🏡 Home is you</span></div>
+    </div>
   </div>
 </section>
 
@@ -720,8 +805,16 @@
   // Lightbox
   function openLightbox(el) {
     var img = el.querySelector('img');
+    if (!img) return; // placeholder with no photo yet
     document.getElementById('lightboxImg').src = img.src;
     document.getElementById('lightbox').classList.add('active');
+  }
+
+  // Turn a missing photo into a soft placeholder instead of a broken icon
+  function markPlaceholder(img) {
+    var item = img.closest('.gallery-item');
+    if (item) item.classList.add('placeholder');
+    img.remove();
   }
 </script>
 </body>
